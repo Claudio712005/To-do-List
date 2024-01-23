@@ -3,6 +3,7 @@ package com.br.api.backend.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.br.api.backend.model.UserModel;
@@ -22,6 +23,11 @@ public class UserController {
     @PostMapping("/createUser")
     public ResponseEntity<?> createUser(@RequestBody UserModel um) {
         return us.create(um);
+    }
+
+    @GetMapping("/autenticate")
+    public ResponseEntity<?> autenticator() {
+        return us.autenticate("dante@gmail.com", "134");
     }
     
 }
