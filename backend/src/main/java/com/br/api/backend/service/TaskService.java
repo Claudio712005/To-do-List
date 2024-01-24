@@ -52,4 +52,20 @@ public class TaskService {
             return new ResponseEntity<>(mesage, HttpStatus.BAD_REQUEST);
         }
     }
+
+    // Editar tarefa
+    public ResponseEntity<?> editTask(TaskModel tm){
+        if(!tr.existsById(tm.getIdTask())){
+            String mesage = ("O código informado não existe.");
+            return new ResponseEntity<>(mesage, HttpStatus.NOT_FOUND);
+        } else if(tm.getNameTask().equals("")){
+            String mesage=("É necessário informar um nome");
+            return new ResponseEntity<>(mesage, HttpStatus.BAD_REQUEST);
+        } else if(tm.getDescriptionTask().equals("")){
+            String mesage=("Informe uma idade válida");
+            return new ResponseEntity<>(mesage, HttpStatus.BAD_REQUEST);
+        } else{
+            return new ResponseEntity<>(tr.save(tm), HttpStatus.OK);
+        }
+    }
 }

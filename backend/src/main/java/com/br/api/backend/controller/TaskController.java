@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.br.api.backend.model.TaskModel;
 import com.br.api.backend.service.TaskService;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
@@ -28,5 +29,10 @@ public class TaskController {
     @DeleteMapping("/tasks/{idTask}")
     public ResponseEntity<?> deleteMyTask(@PathVariable int idTask){
         return ts.deleteTask(idTask);
-    }    
+    }
+
+    @PutMapping("/tasks/{idTask}")
+    public ResponseEntity<?> editTask(@RequestBody TaskModel tm, @PathVariable int idTask){
+        return ts.editTask(tm);
+    }
 }
