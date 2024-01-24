@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.br.api.backend.model.TaskModel;
@@ -22,7 +23,7 @@ public class TaskController {
     private TaskService ts;
     
     @PostMapping("/tasks/{id}")
-    public ResponseEntity<?> createTask(@RequestBody TaskModel tm, @PathVariable long id) {
+    public ResponseEntity<?> createTask(@RequestBody TaskModel tm, @PathVariable int id) {
         return ts.createTask(tm, id);
     }
 
@@ -34,5 +35,10 @@ public class TaskController {
     @PutMapping("/tasks/{idTask}")
     public ResponseEntity<?> editTask(@RequestBody TaskModel tm, @PathVariable int idTask){
         return ts.editTask(tm);
+    }
+
+    @GetMapping("/tasks/{id}")
+    public  ResponseEntity<?> findUserTasks(@PathVariable int id){
+        return ts.findTaskByIdUser(id);
     }
 }

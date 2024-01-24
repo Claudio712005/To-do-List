@@ -22,7 +22,7 @@ public class TaskService {
     private UserRepository ur;
 
     // Cadastrar tarefa
-    public ResponseEntity<?> createTask(TaskModel tm, long userId){
+    public ResponseEntity<?> createTask(TaskModel tm, int userId){
         Optional<UserModel> userOptional = ur.findById(userId);
 
         if (userOptional.isPresent()) {
@@ -66,6 +66,19 @@ public class TaskService {
             return new ResponseEntity<>(mesage, HttpStatus.BAD_REQUEST);
         } else{
             return new ResponseEntity<>(tr.save(tm), HttpStatus.OK);
+        }
+    }
+
+    // Acha as tarefas do usuário
+    public ResponseEntity<?> findTaskByIdUser(int userId){
+        if(userId <= 0){
+            String mesage = "Incorrect id user.";
+            return new ResponseEntity<>(mesage, HttpStatus.BAD_REQUEST);
+        } else if(!ur.existsById(userId)){
+            String mesage = "Not found user.";
+            return new ResponseEntity<>(mesage, HttpStatus.NOT_FOUND);
+        } else{
+            return new ResponseEntity<>(tr.findByUser_Id(userId), HttpStatus.OK);
         }
     }
 }
