@@ -81,4 +81,17 @@ public class TaskService {
             return new ResponseEntity<>(tr.findByUser_Id(userId), HttpStatus.OK);
         }
     }
+
+    // Exibe uma tarefa específica
+    public ResponseEntity<?> showTask(int idTask){
+        if(idTask <= 0){
+            String mesage = "Incorrect id Task.";
+            return new ResponseEntity<>(mesage, HttpStatus.BAD_REQUEST);
+        } else if(!tr.existsById(idTask)){
+            String mesage = "Not found task.";
+            return new ResponseEntity<>(mesage, HttpStatus.NOT_FOUND);
+        } else{
+            return new ResponseEntity<>(tr.findByIdTask(idTask), HttpStatus.OK);
+        }
+    }
 }

@@ -41,4 +41,9 @@ public class TaskController {
     public  ResponseEntity<?> findUserTasks(@PathVariable int id){
         return ts.findTaskByIdUser(id);
     }
+
+    @GetMapping("/tasks/myTask/{idTask}")
+    public ResponseEntity<?> showTask(@PathVariable int idTask){
+        return ts.showTask(idTask);
+    }
 }

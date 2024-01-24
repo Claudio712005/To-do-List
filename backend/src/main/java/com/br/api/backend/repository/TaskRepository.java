@@ -16,4 +16,5 @@ public interface TaskRepository extends CrudRepository<TaskModel, Integer>{
     TaskModel countByIdTask(int idTask);
     
     List<TaskModel> findByUser_Id(int fkUser);
+
 }
