@@ -1,0 +1,99 @@
+@import "fonts/font.sass"
+    
+.containerCreator
+    width: 60%
+    height: 70%
+    display: flex
+    align-items: center
+    flex-direction: column
+    background-color: #2c313d
+    border-radius: 0.4rem
+    box-shadow: 0 0 8px 1px #000
+    gap: 2%
+    margin-top: 2%
+    color: #fff
+    font-family: $task_font
+    
+    h2
+        margin-top: 2%
+        display: flex
+
+        &::before
+            width: 20%
+            height: 2px
+            background-color: #fff
+            content: ''
+            position: absolute
+            margin: 15px 200px
+
+        &::after
+            width: 20%
+            height: 2px
+            background-color: #fff
+            content: ''
+            position: absolute
+            margin: 15px -310px
+
+
+    input
+        width: 95%
+        outline: none
+        border: none
+        border-radius: 0.2rem
+        height: 5%
+        box-shadow: 0 0 5px 1px
+
+    label
+        margin-bottom: 1%
+        align-self: flex-start
+        margin-top: 1%
+        margin-left: 3%
+
+    textarea
+        width: 95%  
+        outline: none
+        border-radius: 0.4rem
+        box-shadow: 0 0 5px 0
+
+    .button-container
+        width: 95%
+        display: flex
+        align-items: center
+        justify-content: center
+        gap: 5%
+        height: 10%
+        
+        button
+            width: 50%
+            height: 90%
+            cursor: pointer
+            border-radius: 0.4rem
+            border: 1px solid #fff
+            background-color: #202437
+            color: #fff
+            font-size: 20px
+            box-shadow: 0 0 10px 1px #000
+            transition: ease-in-out 0.5s all
+
+            &:nth-child(1)
+                color: #36a3e2
+
+                &:hover
+                    background-color: #36a3e2
+                    color: #fff
+                    font-size: 22px
+                    box-shadow: 0 0 5px 1px #36a3e2
+
+            &:nth-child(2)
+                color: #d82828
+
+                &:hover
+                    background-color: #d82828
+                    color: #fff
+                    font-size: 22px
+                    box-shadow: 0 0 5px 1px #d82828
+
+
+
+
+
