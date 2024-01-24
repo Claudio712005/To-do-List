@@ -21,19 +21,35 @@ public class TaskService {
     @Autowired
     private UserRepository ur;
 
+    // Cadastrar tarefa
     public ResponseEntity<?> createTask(TaskModel tm, long userId){
         Optional<UserModel> userOptional = ur.findById(userId);
 
         if (userOptional.isPresent()) {
-            UserModel user = userOptional.get();
-            
+            UserModel user = userOptional.get();        
             tm.setUser(user);
-
             TaskModel savedTask = tr.save(tm);
-
             return new ResponseEntity<>(savedTask, HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>("Usuário não encontrado", HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // Deletar tarefa
+    public ResponseEntity<?> deleteTask(int idTask){
+        if(tr.existsById(idTask)){  
+            TaskModel obj = tr.findById(idTask).orElse(null);
+            if (obj != null) {
+                tr.delete(obj);
+                String message = "Tarefa removida com sucesso";
+                return new ResponseEntity<>(message, HttpStatus.OK);
+            } else {
+                String message = "Erro ao recuperar a tarefa";
+                return new ResponseEntity<>(message, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } else{
+            String mesage = "Task não encontrada";
+            return new ResponseEntity<>(mesage, HttpStatus.BAD_REQUEST);
         }
     }
 }

@@ -22,7 +22,7 @@ public class TaskModel {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idTask;
+    private int idTask;
 
     private String nameTask;
 
