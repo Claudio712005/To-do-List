@@ -1,3 +1,5 @@
+@import "../style/fonts/font"
+
 .task-list
     width: 95%
     min-height: 90vh
@@ -7,6 +9,8 @@
     background-color: #2a2d41
     border-radius: 0.4rem
     margin-bottom: 1%
+    font-family: $task_font
+
 
     .task
         margin: 30px auto
@@ -17,3 +21,41 @@
         background-color: #fff
         box-shadow: 0 0 10px 0
         border-radius: 0.5rem
+        display: flex
+        align-items: center
+        justify-content: space-around
+        overflow: hidden
+
+        .task-content
+            width: 60%
+            display: flex
+            align-items: center
+            gap: 5%
+            justify-content: space-between
+
+            h6
+                width: fit-content
+                text-align: justify
+
+            .date-task
+                font-size: 12px
+
+    .div-button
+        width: 30%
+        height: 100%
+        display: flex
+        align-items: center
+        justify-content: center
+        gap: 5%
+
+        button
+            width: 30%
+            height: 60%
+            border: 1px solid #fff
+            box-shadow: 0 0 5px 0
+            border-radius: 0.5rem
+            cursor: pointer
+            transition: all ease-in-out 0.5s
+
+            &:hover
+                scale: 1.1
