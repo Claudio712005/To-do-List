@@ -8,11 +8,13 @@ function CreateTask() {
     name_task: "",
     task_date: "",
     fk_user: 0,
+    priority: "",
   };
 
   const [nameTaskInput, setNameTaskInput] = useState("");
   const [descriptionTaskInput, setDescriptionTaskInput] = useState("");
   const [taskDateInput, setTaskDateInput] = useState("");
+  const [taskPriority, setTaskPriority] = useState("")
 
   const createTask = () => {
     const taskObj = {
@@ -20,7 +22,8 @@ function CreateTask() {
       descriptionTask: descriptionTaskInput,
       nameTask: nameTaskInput,
       taskDate: taskDateInput,
-      fkUser: sessionStorage.getItem("ID_USER")
+      fkUser: sessionStorage.getItem("ID_USER"),
+      priority: taskPriority
     };
 
     console.log(taskObj)
@@ -44,6 +47,18 @@ function CreateTask() {
       });
   };
 
+  const chgPainel = (value) => {
+    const painel = document.getElementById("painel")
+    if(value == "high"){
+      painel.style.background = "linear-gradient(90deg, rgba(52,17,17,1) 0%, rgba(131,30,14,1) 35%, rgba(255,0,0,1) 100%)"
+    } else if(value =="medium"){
+      painel.style.background = "linear-gradient(90deg, rgba(252,89,0,1) 0%, rgba(218,136,20,1) 35%, rgba(243,255,59,1) 100%)"
+    }else{
+      painel.style.background = "linear-gradient(90deg, rgba(10,51,138,1) 0%, rgba(84,84,246,1) 35%, rgba(0,212,255,1) 100%)"
+    }
+    setTaskPriority(value);
+  }
+
     return(
         <div className="containerCreator">
             <h2>Create your task</h2>
@@ -51,7 +66,13 @@ function CreateTask() {
             <input type="text" name="name" onChange={(e) => setNameTaskInput(e.target.value)}/>
             <label htmlFor="" name="description">Task description</label>
             <textarea name="description" id="" cols="30" rows="10" onChange={e => setDescriptionTaskInput(e.target.value)}></textarea>
-            <label htmlFor="" name="Task date">Task date</label>
+            <label htmlFor="">Priority</label>
+            <div id="painel" className="level">
+              <button value="high" onClick={() => {chgPainel("high")}}>HIGH PRIORITY</button>
+              <button value="medium" onClick={() => {chgPainel("medium")}}>MEDIUM PRIORITY</button>
+              <button value="low" onClick={() => {chgPainel("low")}}>LOW PRIORITY</button>
+            </div>
+            <label htmlFor="" name="Task date">Task date limit</label>
             <input type="date" name="taskDate" id="" onChange={(e) => setTaskDateInput(e.target.value)}/>
             <div className="button-container">
                 <button onClick={createTask}>CREATE</button>

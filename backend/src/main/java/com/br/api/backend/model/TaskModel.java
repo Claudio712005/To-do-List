@@ -36,4 +36,6 @@ public class TaskModel {
     private UserModel user;
 
     private boolean done;
+
+    private String priority;
 }

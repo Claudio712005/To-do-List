@@ -2,7 +2,7 @@
     
 .containerCreator
     width: 60%
-    height: 70%
+    height: 92%
     display: flex
     align-items: center
     flex-direction: column
@@ -10,7 +10,7 @@
     border-radius: 0.4rem
     box-shadow: 0 0 8px 1px #000
     gap: 2%
-    margin-top: 2%
+    margin-top: 1%
     color: #fff
     font-family: $task_font
     
@@ -52,8 +52,45 @@
     textarea
         width: 95%  
         outline: none
+        height: 15%
         border-radius: 0.4rem
         box-shadow: 0 0 5px 0
+
+    .level
+        width: 95%
+        display: flex
+        align-items: center
+        justify-content: space-around
+        height: 15%
+        background-color: #fff
+        border-radius: 0.2rem
+        box-shadow:  0 0 8px 0 #000
+        transition: all ease-in-out 0.5s
+
+        button
+            width: 29%
+            height: 60%
+            border-radius: 0.4rem
+            border: 1px solid #fff
+            box-shadow: 0 0 10px 0 #000
+            transition: all ease-in-out 0.5s
+            cursor: pointer
+            color: #fff
+
+            &:hover
+                scale: 1.05
+
+            &:nth-child(3)
+                background: rgb(10,51,138)
+                background: linear-gradient(90deg, rgba(10,51,138,1) 0%, rgba(84,84,246,1) 35%, rgba(0,212,255,1) 100%)
+
+            &:nth-child(2)
+                background: rgb(252,89,0)
+                background: linear-gradient(90deg, rgba(252,89,0,1) 0%, rgba(218,136,20,1) 35%, rgba(243,255,59,1) 100%)
+                
+            &:nth-child(1)
+                background: rgb(52,17,17)
+                background: linear-gradient(90deg, rgba(52,17,17,1) 0%, rgba(131,30,14,1) 35%, rgba(255,0,0,1) 100%)
 
     .button-container
         width: 95%
