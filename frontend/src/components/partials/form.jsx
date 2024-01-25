@@ -74,7 +74,7 @@ function Form() {
         .then((resposta) => resposta.json())
         .then((data) => {
           console.log(data);
-          sessionStorage.NOME_USER = data[0].name
+          sessionStorage.NAME_USER = data[0].name
           sessionStorage.ID_USER = data[0].id
           navigate('/tasks')
         })

@@ -37,5 +37,5 @@ public class TaskModel {
 
     private boolean done;
 
-    private String priority;
+    private int priority;
 }

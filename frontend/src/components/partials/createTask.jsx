@@ -8,7 +8,7 @@ function CreateTask() {
     name_task: "",
     task_date: "",
     fk_user: 0,
-    priority: "",
+    priority: 0,
   };
 
   const [nameTaskInput, setNameTaskInput] = useState("");
@@ -49,9 +49,9 @@ function CreateTask() {
 
   const chgPainel = (value) => {
     const painel = document.getElementById("painel")
-    if(value == "high"){
+    if(value == 3){
       painel.style.background = "linear-gradient(90deg, rgba(52,17,17,1) 0%, rgba(131,30,14,1) 35%, rgba(255,0,0,1) 100%)"
-    } else if(value =="medium"){
+    } else if(value == 2){
       painel.style.background = "linear-gradient(90deg, rgba(252,89,0,1) 0%, rgba(218,136,20,1) 35%, rgba(243,255,59,1) 100%)"
     }else{
       painel.style.background = "linear-gradient(90deg, rgba(10,51,138,1) 0%, rgba(84,84,246,1) 35%, rgba(0,212,255,1) 100%)"
@@ -68,9 +68,9 @@ function CreateTask() {
             <textarea name="description" id="" cols="30" rows="10" onChange={e => setDescriptionTaskInput(e.target.value)}></textarea>
             <label htmlFor="">Priority</label>
             <div id="painel" className="level">
-              <button value="high" onClick={() => {chgPainel("high")}}>HIGH PRIORITY</button>
-              <button value="medium" onClick={() => {chgPainel("medium")}}>MEDIUM PRIORITY</button>
-              <button value="low" onClick={() => {chgPainel("low")}}>LOW PRIORITY</button>
+              <button  onClick={() => {chgPainel(3)}}>HIGH PRIORITY</button>
+              <button  onClick={() => {chgPainel(2)}}>MEDIUM PRIORITY</button>
+              <button onClick={() => {chgPainel(1)}}>LOW PRIORITY</button>
             </div>
             <label htmlFor="" name="Task date">Task date limit</label>
             <input type="date" name="taskDate" id="" onChange={(e) => setTaskDateInput(e.target.value)}/>

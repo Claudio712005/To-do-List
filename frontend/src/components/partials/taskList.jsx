@@ -1,18 +1,23 @@
-import { useEffect, useState } from "react"
+import { createElement, useEffect, useState } from "react"
 import "../../style/taskList.sass"
 
 
 function TaskList(){
 
     const [listTask, setListTask] = useState([])
+    const [navInfo, setNavInfo] = useState(true)
 
     useEffect(() => {
+        fetchTasks()
+    }, [listTask])
+
+    function fetchTasks() {
         fetch(`http://localhost:8080/tasks/${sessionStorage.getItem("ID_USER")}`)
-        .then(Response => {return Response.json();})
+        .then(Response => Response.json())
         .then(resp => {
-            setListTask(resp)
-        })  
-    }, [])
+            setListTask(resp);
+        })
+    }
 
     function deleteTask(id, obj){    
         fetch("http://localhost:8080/tasks/"+ id,{
@@ -26,6 +31,7 @@ function TaskList(){
         .then(response => response.json())
         .then(res => {
             console.log(res)
+            fetchTasks()
         })
     }
 
@@ -45,28 +51,96 @@ function TaskList(){
         .then((resposta) => resposta.json())
         .then((data) => {
             console.log(data);
+            fetchTasks()
         })
         .catch((error) => {
             console.error(error);
         });
     }
 
+    let click = 0
+
+    function showInfo(){
+        setNavInfo(!navInfo)
+        const navBar = document.getElementById("nav_bar")
+        const topBar = document.getElementById("top")
+        const infoDiv = document.getElementById("info")
+
+        const heightNav = navBar.style.height
+
+        if(navInfo){
+            navBar.style.height = "15%"    
+            topBar.style.height = "40.95px"
+            infoDiv.style.height = "40%"
+            infoDiv.innerHTML = `
+                <h4 id="content_info">PRIORITY</h4>
+                <div id="content_info" class="content-info">
+                    <div class="colorBall1"></div>
+                    <h6>DONE</h6>
+                </div>
+                <div id="content_info" class="content-info">
+                    <div class="colorBall2"></div>
+                    <h6>LOW</h6>
+                </div>
+                <div id="content_info" class="content-info">
+                    <div class="colorBall3"></div>
+                    <h6>MEDIUM</h6>
+                </div>
+                <div id="content_info" class="content-info">
+                    <div class="colorBall4"></div>
+                    <h6>HIGH</h6>
+                </div>
+            `;
+            
+        } else{
+            const contentInfo = document.querySelectorAll("#content_info")
+            navBar.style.height = "7%" 
+            infoDiv.style.height="0%"
+            contentInfo.forEach((element, index) => {
+                element.style.animation = `fade-out 0.2s ease-out both`;
+            });    
+
+            setTimeout(() => {
+                contentInfo.forEach((element) => {
+                    element.remove();
+                });
+            }, 1500)  
+        }
+
+
+    }
+
     return (
         <div className="task-list">
-            <div className="nav-bar-task"></div>
+            <div className="nav-bar-task" id="nav_bar">
+                <div className="top" id="top">
+                    <h1>Welcome {sessionStorage.getItem("NAME_USER")}</h1>
+                    <button>ORDER BY PRIORITY</button>
+                    <button>NOT DONE</button>
+                    <button onClick={() => {showInfo()}}>INFO</button>
+                </div>
+                <div className="info" id="info"></div>
+            </div>
             {listTask.map((obj, id) => (
                     <div style={
                         obj.done
                         ? { background: "linear-gradient(90deg, rgba(10,179,38,1) 0%, rgba(75,161,31,1) 35%, rgba(51,231,69,1) 100%)" }
-                            :obj.priority === "low"
+                            :obj.priority === 1
                             ? { background: "linear-gradient(90deg, rgba(10,51,138,1) 0%, rgba(84,84,246,1) 35%, rgba(0,212,255,1) 100%)" }
-                            : obj.priority === "medium"
+                            : obj.priority === 2
                             ? { background: "linear-gradient(90deg, rgba(252,89,0,1) 0%, rgba(218,136,20,1) 35%, rgba(243,255,59,1) 100%)" }
                             : { background: "linear-gradient(90deg, rgba(52,17,17,1) 0%, rgba(131,30,14,1) 35%, rgba(255,0,0,1) 100%)" }
-                        } className="task" id="task_painel" key={id}
+                        } className="task" key={id} 
                     >
                     <div className="task-content">
-                        <h2>{obj.nameTask}<br/>Priority: {obj.priority}</h2>
+                        <h2>{obj.nameTask}<br/>Priority: {
+                            obj.priority === 1
+                            ? "Low"
+                            : obj.priority === 2
+                            ? "Medium"
+                            : "High"
+
+                        }</h2>
                         <h6>{obj.descriptionTask}</h6>
                         <h2 className="date-task">
                             {(() => {

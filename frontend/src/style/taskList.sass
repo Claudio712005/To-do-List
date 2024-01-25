@@ -1,22 +1,98 @@
 @import "../style/fonts/font"
+@import "./animation/animation"
 
 .task-list
     width: 95%
     min-height: 90vh
     overflow-y: auto
     margin-top: 1%
-    box-shadow: 0 0 10px 0
-    background-color: #ffffff
+    box-shadow: inset 0 0 10px 0
     border-radius: 0.4rem
     margin-bottom: 1%
     font-family: $task_font
     gap: 1%
+    animation: fade-in 1.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both
 
     .nav-bar-task
         width: 95%
         height: 7%
-        background-color: #000
+        background-color: #f1f1f1
         margin: 30px auto
+        border-radius: 0.5rem 0.5rem 2rem 2rem
+        box-shadow: 0 0 8px 
+        display: flex
+        align-items: center
+        flex-direction: column
+        transition: all ease-in-out 0.5s
+
+        .top
+            width: 100%
+            height: 100%
+            display: flex
+            align-items: center
+            justify-content: space-around
+            margin-top: 0.2%
+
+            h1
+                font-family: $nav_bar_font_name_h1
+                font-size: 18px
+
+            button
+                background-color: #f1f1f1
+                cursor: pointer
+                transition: all ease-in-out 0.5s
+                height: 100%
+                width: 14%
+                border: none
+
+                &:hover
+                    scale: 1.03
+                    box-shadow: 0 0 8px 0
+        
+        .info
+            width: 100%
+            height: 0%
+            display: flex
+            align-items: center
+            justify-content: space-around
+
+            .content-info
+                display: flex
+                align-items: center
+                justify-content: space-evenly
+                width: 10%
+                height: 100%
+                animation: scale-in-tr 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both
+
+                .colorBall1
+                    background: rgb(10,51,138)
+                    background: linear-gradient(90deg, rgba(10,179,38,1) 0%, rgba(75,161,31,1) 35%, rgba(51,231,69,1) 100%)
+                    width: 25%
+                    height: 80%
+                    border-radius: 100%
+                    
+                .colorBall2
+                    background: rgb(10,51,138)
+                    background: linear-gradient(90deg, rgba(10,51,138,1) 0%, rgba(84,84,246,1) 35%, rgba(0,212,255,1) 100%)
+                    width: 25%
+                    height: 80%
+                    border-radius: 100%
+
+                .colorBall3
+                    background: rgb(252,89,0)
+                    background: linear-gradient(90deg, rgba(252,89,0,1) 0%, rgba(218,136,20,1) 35%, rgba(243,255,59,1) 100%)
+                    width: 25%
+                    height: 80%
+                    border-radius: 100%    
+                    
+                .colorBall4
+                    background: rgb(52,17,17)
+                    background: linear-gradient(90deg, rgba(52,17,17,1) 0%, rgba(131,30,14,1) 35%, rgba(255,0,0,1) 100%)                        
+                    width: 25%
+                    height: 80%
+                    border-radius: 100%
+
+
 
     .task
         margin: 30px auto
@@ -33,6 +109,7 @@
         justify-content: space-around
         overflow: hidden     
         transition: all 0.5s ease-in-out
+        animation: slide-in-fwd-left 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both
 
         &:hover
             scale: 1.05 
