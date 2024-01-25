@@ -24,12 +24,10 @@ public class TaskService {
     // Cadastrar tarefa
     public ResponseEntity<?> createTask(TaskModel tm, int userId){
         Optional<UserModel> userOptional = ur.findById(userId);
-
         if (userOptional.isPresent()) {
             UserModel user = userOptional.get();        
             tm.setUser(user);
-            TaskModel savedTask = tr.save(tm);
-            return new ResponseEntity<>(savedTask, HttpStatus.CREATED);
+            return new ResponseEntity<>(tr.save(tm), HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>("Usuário não encontrado", HttpStatus.NOT_FOUND);
         }

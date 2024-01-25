@@ -29,7 +29,7 @@ function Form() {
     setUserObj((updatedObjUser) => {
       fetch("http://localhost:8080/createUser", {
         method: "post",
-        body: JSON.stringify(updatedObjUser), // Use o estado atualizado aqui
+        body: JSON.stringify(updatedObjUser),
         headers: {
           "Content-type": "application/json",
           Accept: "application/json",
@@ -74,6 +74,8 @@ function Form() {
         .then((resposta) => resposta.json())
         .then((data) => {
           console.log(data);
+          sessionStorage.NOME_USER = data[0].name
+          sessionStorage.ID_USER = data[0].id
           navigate('/tasks')
         })
         .catch((error) => {
