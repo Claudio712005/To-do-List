@@ -46,4 +46,14 @@ public class TaskController {
     public ResponseEntity<?> showTask(@PathVariable int idTask){
         return ts.showTask(idTask);
     }
+
+    @GetMapping("/tasks/notDone/{id}")
+    public  ResponseEntity<?> findTaskNotDone(@PathVariable int id){
+        return ts.findTaskNotDone(false, id);
+    }
+
+    @GetMapping("/tasks/orderedPriority/{id}")
+    public  ResponseEntity<?> orderByPriority(@PathVariable int id){
+        return ts.findTaskOrderedByDescPriority(id);
+    }
 }

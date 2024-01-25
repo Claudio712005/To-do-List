@@ -6,10 +6,12 @@ function TaskList(){
 
     const [listTask, setListTask] = useState([])
     const [navInfo, setNavInfo] = useState(true)
+    const [btnNotDone, setBtnNotDone] = useState(false)
+    const [btnOrdPr, setBtnOrdPr] = useState(false)
 
     useEffect(() => {
         fetchTasks()
-    }, [listTask])
+    }, [])
 
     function fetchTasks() {
         fetch(`http://localhost:8080/tasks/${sessionStorage.getItem("ID_USER")}`)
@@ -110,13 +112,34 @@ function TaskList(){
 
     }
 
+    function notDone(){
+        const btnFilterNotDone = document.getElementById("btn_nt_done");
+
+        setBtnNotDone(!btnNotDone);
+
+        if(btnNotDone){
+            btnFilterNotDone.style.color = "red"
+            btnFilterNotDone.style.fontSize = "17px"
+        } else{
+            btnFilterNotDone.style.color = "black"
+            btnFilterNotDone.style.fontSize = "13.333px"
+            fetchTasks()
+        }
+
+        fetch(`http://localhost:8080/tasks/notDone/${sessionStorage.getItem("ID_USER")}`)
+        .then(Response => Response.json())
+        .then(resp => {
+            setListTask(resp);
+        })
+    }
+
     return (
         <div className="task-list">
             <div className="nav-bar-task" id="nav_bar">
                 <div className="top" id="top">
                     <h1>Welcome {sessionStorage.getItem("NAME_USER")}</h1>
-                    <button>ORDER BY PRIORITY</button>
-                    <button>NOT DONE</button>
+                    <button>ORDER BY PRIORITY (ALL)</button>
+                    <button id="btn_nt_done" onClick={() => {notDone()}}>NOT DONE</button>
                     <button onClick={() => {showInfo()}}>INFO</button>
                 </div>
                 <div className="info" id="info"></div>

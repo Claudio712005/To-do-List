@@ -17,4 +17,8 @@ public interface TaskRepository extends CrudRepository<TaskModel, Integer>{
     
     List<TaskModel> findByUser_Id(int fkUser);
 
+    List<TaskModel> findByDoneAndUser_id(boolean done, int id);
+
+    List<TaskModel> findByUser_idOrderByPriorityDesc(int id);
+
 }

@@ -92,4 +92,13 @@ public class TaskService {
             return new ResponseEntity<>(tr.findByIdTask(idTask), HttpStatus.OK);
         }
     }
+
+    public ResponseEntity<?> findTaskNotDone(boolean st, int id){
+        return new ResponseEntity<>(tr.findByDoneAndUser_id(st, id), HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> findTaskOrderedByDescPriority(int id){
+        return new ResponseEntity<>(tr.findByUser_idOrderByPriorityDesc(id), HttpStatus.OK);
+    }
+    
 }
