@@ -34,4 +34,6 @@ public class TaskModel {
     @ManyToOne
     @JoinColumn(name = "fkUser")
     private UserModel user;
+
+    private boolean done;
 }

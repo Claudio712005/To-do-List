@@ -6,7 +6,6 @@ function TaskList(){
 
     const [listTask, setListTask] = useState([])
 
-
     useEffect(() => {
         fetch(`http://localhost:8080/tasks/${sessionStorage.getItem("ID_USER")}`)
         .then(Response => {return Response.json();})
@@ -28,6 +27,28 @@ function TaskList(){
         .then(res => {
             console.log(res)
         })
+    }
+
+    function doneTask(id, obj){
+
+        if(obj.done) obj.done = false
+        else obj.done = true
+        
+        fetch("http://localhost:8080/tasks/" + id, {
+            method: "put",
+            body: JSON.stringify(obj),
+            headers: {
+            "Content-type": "application/json",
+            Accept: "application/json",
+            },
+        })
+        .then((resposta) => resposta.json())
+        .then((data) => {
+            console.log(data);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
     }
 
     return (
@@ -57,9 +78,15 @@ function TaskList(){
                     </div>
                     <div className="div-button">
                         <label htmlFor="" name="finish">Finish Task</label>
-                        <input type="checkbox" name="finish" id="" />
+                        {
+                            obj.done 
+                            ?
+                            <input onClick={() => {doneTask(obj.idTask, obj)}} type="checkbox" name="finish" id="" checked />
+                            :
+                            <input onClick={() => {doneTask(obj.idTask, obj)}} type="checkbox" name="finish" id="" />
+                        }
                         <button>OPEN</button>
-                        <button onClick={deleteTask(obj.idTask, obj)}>DELETE</button>
+                        <button onClick={() => {deleteTask(obj.idTask, obj)}}>DELETE</button>
                     </div>
                 </div>
             ))}
