@@ -53,4 +53,57 @@ Este projeto está licenciado sob a [Licença MIT](LICENSE).
 
 ---
 
-Espero que este projeto inspire e ajude outros desenvolvedores a explorar e aprimorar suas habilidades. Se tiver alguma dúvida ou sugestão, fique à vontade para entrar em contato!
+# To-Do List Project with React and Spring Boot
+
+## Advanced To-Do List
+
+This is a To-Do List project developed as part of my learning process, challenging myself to go beyond common implementations. Instead of sticking to HTML, CSS, and JavaScript, I decided to explore creating a more robust To-Do List with a React frontend and a Java backend using Spring Boot.
+
+### Technologies Used
+
+- **Frontend:**
+  - React
+  - Sass (for styling)
+
+- **Backend:**
+  - Java
+  - Spring Boot
+  - Maven (for dependency management)
+
+## Project Objective
+
+The main goal of this project was to expand my knowledge after completing two Spring Boot courses. Instead of following the traditional path of To-Do List projects, I decided to add complexity to the challenge by exploring the integration of a React frontend with a Java backend.
+
+### Features
+
+- Adding, removing, and editing tasks
+- Marking tasks as completed
+- Robust backend for managing server-side operations
+- Enhanced styling with Sass
+- Practical development and learning with React, Spring Boot, and Maven
+
+## Project Structure
+
+- **`frontend/`**: Contains files related to the React frontend.
+- **`backend/`**: Contains files related to the Java backend with Spring Boot.
+
+## How to Run the Project
+
+1. Clone this repository: `git clone https://github.com/your-username/your-project.git`
+2. Navigate to the frontend directory: `cd frontend`
+3. Install frontend dependencies: `npm install`
+4. Start the frontend: `npm start`
+5. Navigate to the backend directory: `cd backend`
+6. Start the backend: `./mvnw spring-boot:run`
+
+The frontend will be available at `http://localhost:3000/` and the backend at `http://localhost:8080/`.
+
+### Contributions
+
+Contributions are welcome! Feel free to open issues or submit pull requests with improvements.
+
+### License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
