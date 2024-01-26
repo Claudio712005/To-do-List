@@ -13,8 +13,10 @@
     border-radius: 1rem
     background-color: #181821
     box-shadow: #000 0 0 8px 0
+    animation: scale-in-ver-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both   
 
     form
+        animation: scale-in-ver-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both   
 
         h1
             font-size: 25px
@@ -71,8 +73,10 @@
                     width: 270px
                     height: 2px
                     background-color: #fff
-                    margin-top: 5%
+                    margin-top: 25%
                     cursor: none
+                    animation: scale-in-ver-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both   
+
         h6
             text-decoration: underline
             color: #fff
@@ -82,4 +86,20 @@
             margin-top: 12%
             cursor: pointer
 
-            
+    .popup
+        width: 100%
+        height: 40%
+        background-color: #fff
+        border-radius: 0.6rem
+        box-shadow: 0 0 8px 0
+        display: flex
+        align-items: center
+        justify-content: center
+        text-align: justify
+        color: #000
+        font-family: $soft_skills_text_font
+        font-size: 12px
+        position: absolute
+        margin: 0 auto
+        flex-direction: column
+        animation: slide-in-blurred-top 0.6s cubic-bezier(0.230, 1.000, 0.320, 1.000) both

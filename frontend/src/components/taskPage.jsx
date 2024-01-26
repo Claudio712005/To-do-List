@@ -22,6 +22,11 @@ function TaskPage() {
   } else{
     return (
       <div className="contentTask">
+        <i class="fa-solid fa-person-walking-arrow-right" onClick={() => {
+          navigate("/")
+          sessionStorage.setItem("ID_USER", "")
+          sessionStorage.setItem("NAME_USER", "")
+        }}></i>
         <Head toggleFormVisibility={toggleFormVisibility} formVisibility={formVisibility} />
         {formVisibility ? <CreateTask /> : <TaskList />}
       </div>

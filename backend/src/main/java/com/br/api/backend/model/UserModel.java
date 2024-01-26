@@ -1,6 +1,7 @@
 package com.br.api.backend.model;
 
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +22,7 @@ public class UserModel {
 
     private String name;
 
+    @Column(unique = true)
     private String email;  
 
     private String password;

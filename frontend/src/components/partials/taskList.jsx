@@ -6,8 +6,6 @@ function TaskList(){
 
     const [listTask, setListTask] = useState([])
     const [navInfo, setNavInfo] = useState(true)
-    const [btnNotDone, setBtnNotDone] = useState(false)
-    const [btnOrdPr, setBtnOrdPr] = useState(false)
 
     useEffect(() => {
         fetchTasks()
@@ -21,21 +19,30 @@ function TaskList(){
         })
     }
 
-    function deleteTask(id, obj){    
-        fetch("http://localhost:8080/tasks/"+ id,{
+    function deleteTask(id, obj) {
+        console.log('Deleting task:', id, obj);
+    
+        fetch(`http://localhost:8080/tasks/${id}`, {
             method: "delete",
             body: JSON.stringify(obj),
             headers: {
-              'Content-type':'application/json',
-              'Accept':'application/json'
+                'Content-type': 'application/json',
+                'Accept': 'application/json'
             }
         })
-        .then(response => response.json())
-        .then(res => {
+        .then((res) => {
             console.log(res)
-            fetchTasks()
         })
+        .then((data) => {
+            console.log('Task deleted:', data);
+            fetchTasks();
+        })
+        .catch((error) => {
+            console.error('Error deleting task:', error);
+        });
     }
+    
+    
 
     function doneTask(id, obj){
 
@@ -59,8 +66,6 @@ function TaskList(){
             console.error(error);
         });
     }
-
-    let click = 0
 
     function showInfo(){
         setNavInfo(!navInfo)
@@ -112,34 +117,32 @@ function TaskList(){
 
     }
 
-    function notDone(){
-        const btnFilterNotDone = document.getElementById("btn_nt_done");
-
-        setBtnNotDone(!btnNotDone);
-
-        if(btnNotDone){
-            btnFilterNotDone.style.color = "red"
-            btnFilterNotDone.style.fontSize = "17px"
-        } else{
-            btnFilterNotDone.style.color = "black"
-            btnFilterNotDone.style.fontSize = "13.333px"
-            fetchTasks()
-        }
-
+    function notDone() {
         fetch(`http://localhost:8080/tasks/notDone/${sessionStorage.getItem("ID_USER")}`)
-        .then(Response => Response.json())
-        .then(resp => {
-            setListTask(resp);
-        })
+            .then((Response) => Response.json())
+            .then((resp) => {
+                setListTask(resp);
+            });
+
     }
+    
+    function orderedPriority() {
+        fetch(`http://localhost:8080/tasks/orderedPriority/${sessionStorage.getItem("ID_USER")}`)
+            .then((Response) => Response.json())
+            .then((resp) => {
+                setListTask(resp);
+            });
+    }
+
 
     return (
         <div className="task-list">
             <div className="nav-bar-task" id="nav_bar">
                 <div className="top" id="top">
                     <h1>Welcome {sessionStorage.getItem("NAME_USER")}</h1>
-                    <button>ORDER BY PRIORITY (ALL)</button>
+                    <button id="btn_ord_pr" onClick={() => {orderedPriority()}}>ORDER BY PRIORITY (ALL)</button>
                     <button id="btn_nt_done" onClick={() => {notDone()}}>NOT DONE</button>
+                    <button id="btn_default" onClick={() => {fetchTasks()}}>DEFAULT</button>
                     <button onClick={() => {showInfo()}}>INFO</button>
                 </div>
                 <div className="info" id="info"></div>

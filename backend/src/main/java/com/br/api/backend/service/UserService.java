@@ -3,6 +3,7 @@ package com.br.api.backend.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,12 @@ public class UserService {
     private UserRepository ur;
     
     public ResponseEntity<?> create(UserModel um){
-        return new ResponseEntity<UserModel>(ur.save(um), HttpStatus.CREATED);
+        try {
+            return new ResponseEntity<>(ur.save(um), HttpStatus.CREATED);
+        } catch (DataIntegrityViolationException e) {
+            String errorMessage = "Já existe um usuário com este e-mail.";
+            return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+        }
     }
 
     public ResponseEntity<?> autenticate(String email, String password){

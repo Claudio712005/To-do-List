@@ -19,14 +19,40 @@ function Form() {
   const [passwordInput, setPasswordInput] = useState("");
 
   const invite = () => {
-    setUserObj({
-      ...objUser,
-      name: nameInput,
-      email: emailInput,
-      password: passwordInput,
-    });
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    setUserObj((updatedObjUser) => {
+    const isValidEmail = emailRegex.test(emailInput);
+
+    let msg = ""
+    if (emailInput == "") msg += `<h5>THE USER EMAIL CANNOT BE EMPTY</h5><br></br>`;
+    else if (!isValidEmail) msg += `<h5>THE USER EMAIL CANNOT BE USED</h5><br></br>`;
+    if(passwordInput == "") msg += `<h5>THE USER PASSWORD CANNOT BE EMPTY</h5><br></br>`;
+    if(nameInput == "") msg += `<h5>THE USER NAME CANNOT BE EMPTY</h5><br></br>`;
+    else if(nameInput.length > 30) msg += "<h5>THE USER NAME CANNOT BE LONGER THAN 30 CHARACTERS</h5><br>"
+
+    let containerForm = document.getElementById("container_form");
+    let popup = document.createElement("div");
+    popup.className = "popup";
+
+    if(msg !== ""){
+      popup.innerHTML = msg;
+  
+      containerForm.appendChild(popup);
+  
+      setTimeout(() => {
+        popup.style.animation = "slide-out-blurred-top 0.45s cubic-bezier(0.755, 0.050, 0.855, 0.060) both";
+        popup.addEventListener("animationend", () => {
+          popup.remove();
+        });
+      }, 3000);
+    } else{
+      const updatedObjUser = {
+        ...objUser,
+        name: nameInput,
+        email: emailInput,
+        password: passwordInput,
+      };
+  
       fetch("http://localhost:8080/createUser", {
         method: "post",
         body: JSON.stringify(updatedObjUser),
@@ -35,15 +61,29 @@ function Form() {
           Accept: "application/json",
         },
       })
-        .then((resposta) => resposta.json())
+        .then((res) => res.json())
         .then((data) => {
+          setBtnForm(false)
           console.log(data);
         })
         .catch((error) => {
-          alert("Erro");
+          if (error && error.message) {
+            popup.innerHTML = "There is already a user with this email registered";
+        
+            containerForm.appendChild(popup);
+        
+            setTimeout(() => {
+              popup.style.animation = "slide-out-blurred-top 0.45s cubic-bezier(0.755, 0.050, 0.855, 0.060) both";
+              popup.addEventListener("animationend", () => {
+                popup.remove();
+              });
+            }, 3000);
+          } else {
+            alert("Unknow error");
+          }
           console.error(error);
         });
-    });
+    }
   };
 
   const objLogin = {
@@ -56,16 +96,38 @@ function Form() {
   const [loginPassword, setPasswordInputLogin] = useState("");
 
   const enter = () => {
-    setLoginObj({
+
+    let msg = ""
+    if (loginEmail == "") msg += `<h5>THE LOGIN USER EMAIL CANNOT BE EMPTY</h5><br></br>`;
+    if(loginPassword == "") msg += `<h5>THE LOGIN USER PASSWORD CANNOT BE EMPTY</h5><br></br>`;
+
+    const objLogin = {
       ...objLoginUser,
       email: loginEmail,
       password: loginPassword,
-    });
+    };
 
-    setLoginObj((loginDataUser) => {
+    let containerForm = document.getElementById("container_form");
+    let popup = document.createElement("div");
+    popup.className = "popup";
+
+    if(msg !== ""){
+      popup.innerHTML = msg;
+  
+      containerForm.appendChild(popup);
+  
+      setTimeout(() => {
+        popup.style.animation = "slide-out-blurred-top 0.45s cubic-bezier(0.755, 0.050, 0.855, 0.060) both";
+        popup.addEventListener("animationend", () => {
+          popup.remove();
+        });
+      }, 3000);
+
+    } else{
+
       fetch("http://localhost:8080/autenticate", {
         method: "post",
-        body: JSON.stringify(loginDataUser),
+        body: JSON.stringify(objLogin),
         headers: {
           "Content-type": "application/json",
           Accept: "application/json",
@@ -79,10 +141,19 @@ function Form() {
           navigate('/tasks')
         })
         .catch((error) => {
-          alert("Erro");
+          popup.innerHTML = "NOT FOUND USER";
+          containerForm.appendChild(popup);
+          setTimeout(() => {
+            popup.style.animation = "slide-out-blurred-top 0.45s cubic-bezier(0.755, 0.050, 0.855, 0.060) both";
+            popup.addEventListener("animationend", () => {
+              popup.remove();
+            });
+          }, 3000);
           console.error(error);
         });
-    });
+    }
+
+
   };
 
   const handleSubmit = (event) => {
@@ -90,7 +161,7 @@ function Form() {
   };
 
   return (
-    <div className="formContainer">
+    <div id="container_form" className="formContainer">
       <form onSubmit={handleSubmit}>
         {changeForm ? (
           <div>
