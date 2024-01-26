@@ -3,6 +3,17 @@ import "../../style/taskList.sass"
 
 
 function TaskList(){
+    const objCreateTask = {
+        id_task: 0,
+        description_task: "",
+        name_task: "",
+        task_date: "",
+        fk_user: 0,
+        priority: 0,
+    };
+
+    const [editingTaskIndex, setEditingTaskIndex] = useState(null);
+    const [newDescription, setNewDescription] = useState("");
 
     const [listTask, setListTask] = useState([])
     const [navInfo, setNavInfo] = useState(true)
@@ -134,9 +145,65 @@ function TaskList(){
             });
     }
 
+    function editTask(h6Descp){
+        const index = listTask.findIndex((task, i) => `desc_${i}` === h6Descp);
+        
+        if (index !== -1) {
+            setEditingTaskIndex(index);
+            setNewDescription(listTask[index].descriptionTask);
+        }
+    }
+
+    function saveDescriptionChanges(id, obj) {
+        if (editingTaskIndex !== null) {
+            if(newDescription.length > 250){
+                let container = document.getElementById("task_list_container");
+                let popup = document.createElement("div");
+                popup.className = "popup";
+                popup.innerHTML = "YOUR TASK CANNOT BE SAVED BECAUSE IT EXCEEDS 250 CHARACTERS";
+                container.appendChild(popup);
+            
+                setTimeout(() => {
+                    popup.style.animation = "slide-out-blurred-top 0.45s cubic-bezier(0.755, 0.050, 0.855, 0.060) both";
+                    popup.addEventListener("animationend", () => {
+                    popup.remove();
+                    });
+                }, 3000);
+                return
+            }
+            const updatedList = [...listTask];
+            updatedList[editingTaskIndex].descriptionTask = newDescription;
+            setListTask(updatedList);
+            setEditingTaskIndex(null);
+        
+            fetch("http://localhost:8080/tasks/editDescp/" + obj.idTask, {
+                method: "put",
+                body: newDescription, 
+                headers: {
+                "Content-type": "application/json",
+                Accept: "application/json",
+                },
+            })
+                .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Error: ${response.statusText}`);
+                }
+                return response.json();
+                })
+                .then((data) => {
+                console.log("Succes:", data);
+                fetchTasks();
+                })
+                .catch((error) => {
+                console.error(error);
+                });
+            }
+      }
+      
+      
 
     return (
-        <div className="task-list">
+        <div id="task_list_container" className="task-list">
             <div className="nav-bar-task" id="nav_bar">
                 <div className="top" id="top">
                     <h1>Welcome {sessionStorage.getItem("NAME_USER")}</h1>
@@ -167,7 +234,29 @@ function TaskList(){
                             : "High"
 
                         }</h2>
-                        <h6>{obj.descriptionTask}</h6>
+                        {
+                            editingTaskIndex !== null && editingTaskIndex === id
+                            ? (
+                            <>
+                                <textarea
+                                type="text"
+                                value={newDescription}
+                                onChange={(e) => setNewDescription(e.target.value)}
+                                className={
+                                    obj.done
+                                    ? "doneTextArea"
+                                    :obj.priority === 1
+                                    ? "lowTextArea"
+                                    : obj.priority === 2
+                                    ? "mediumTextArea"
+                                    : "highTextArea"
+                                }
+                                ></textarea>
+                                <button className="saveNewDescp" onClick={() => {saveDescriptionChanges(id, obj)}}>Save</button>
+                            </>
+                            )
+                            : <h6 id={`desc_${id}`}>{obj.descriptionTask}</h6>
+                        }
                         <h2 className="date-task">
                             {(() => {
                                 if(obj.taskDate != null){
@@ -210,6 +299,7 @@ function TaskList(){
                         }
                         <button onClick={() => {deleteTask(obj.idTask, obj)}}>DELETE</button>
                     </div>
+                    <i class="fa-solid fa-pen-to-square" onClick={() => {editTask("desc_" + id)}}></i>
                 </div>
             ))}
         </div>

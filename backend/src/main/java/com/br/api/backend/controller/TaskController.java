@@ -56,4 +56,9 @@ public class TaskController {
     public  ResponseEntity<?> orderByPriority(@PathVariable int id){
         return ts.findTaskOrderedByDescPriority(id);
     }
+
+    @PutMapping("/tasks/editDescp/{idTask}")
+    public ResponseEntity<?> editDescription(@PathVariable int idTask, @RequestBody String tm){
+        return ts.editDescriptionTask(idTask, tm);
+    }
 }

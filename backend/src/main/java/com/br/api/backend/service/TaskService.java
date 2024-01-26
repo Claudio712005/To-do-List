@@ -67,6 +67,23 @@ public class TaskService {
         }
     }
 
+    // Editar apenas descrição tarefa
+    public ResponseEntity<?> editDescriptionTask(int id, String newDescription){
+        if (!tr.existsById(id)) {
+            String message = ("O código informado não existe.");
+            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        }
+        TaskModel existingTask = tr.findById(id).orElse(null);
+        if (existingTask != null) {
+            existingTask.setDescriptionTask(newDescription);
+            return new ResponseEntity<>(tr.save(existingTask), HttpStatus.OK);
+        } else {
+            String message = ("Erro ao carregar a tarefa existente.");
+            return new ResponseEntity<>(message, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+
     // Acha as tarefas do usuário
     public ResponseEntity<?> findTaskByIdUser(int userId){
         if(userId <= 0){
